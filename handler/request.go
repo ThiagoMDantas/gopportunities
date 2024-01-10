@@ -16,7 +16,7 @@ type Opening struct {
 }
 
 func (r *Opening) Validate() error {
-	if r.Role == "" && r.Company == "" && r.Location == "" && r.Remote == nil && r.Salary <= 0 {
+	if r.Role == "" && r.Company == "" && r.Location == "" && r.Remote == nil && r.Link == "" && r.Salary <= 0 {
 		return fmt.Errorf("malformed request body or is empty")
 	}
 	if r.Role == "" {
@@ -38,4 +38,20 @@ func (r *Opening) Validate() error {
 		return errParamIsRequeed("salary", "int64")
 	}
 	return nil
+}
+
+type UpdateOpening struct {
+	Role     string `json:"role"`
+	Company  string `json:"company"`
+	Location string `json:"location"`
+	Remote   *bool  `json:"remote"`
+	Link     string `json:"link"`
+	Salary   int64  `json:"salary"`
+}
+
+func (r *UpdateOpening) Validate() error {
+	if r.Role != "" || r.Company != "" || r.Location != "" || r.Remote != nil || r.Link != "" || r.Salary > 0 {
+		return nil
+	}
+	return fmt.Errorf("at least one valid field must be provided")
 }
