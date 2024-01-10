@@ -2,8 +2,7 @@ package handler
 
 import "fmt"
 
-
-func errParamIsRequeed(name, typ string)  error {
+func errParamIsRequeed(name, typ string) error {
 	return fmt.Errorf("param: %s (type: %s) is required", name, typ)
 }
 
@@ -17,6 +16,9 @@ type Opening struct {
 }
 
 func (r *Opening) Validate() error {
+	if r.Role == "" && r.Company == "" && r.Location == "" && r.Remote == nil && r.Salary <= 0 {
+		return fmt.Errorf("malformed request body or is empty")
+	}
 	if r.Role == "" {
 		return errParamIsRequeed("role", "string")
 	}
