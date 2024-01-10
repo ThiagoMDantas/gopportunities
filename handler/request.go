@@ -7,7 +7,7 @@ func errParamIsRequeed(name, typ string)  error {
 	return fmt.Errorf("param: %s (type: %s) is required", name, typ)
 }
 
-type CreateOpeningRequest struct {
+type Opening struct {
 	Role     string `json:"role"`
 	Company  string `json:"company"`
 	Location string `json:"location"`
@@ -16,7 +16,7 @@ type CreateOpeningRequest struct {
 	Salary   int64  `json:"salary"`
 }
 
-func (r *CreateOpeningRequest) Validate() error {
+func (r *Opening) Validate() error {
 	if r.Role == "" {
 		return errParamIsRequeed("role", "string")
 	}
