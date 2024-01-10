@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,6 +12,7 @@ func CreateOpeningHandler(ctx *gin.Context) {
 
 	if err := request.Validate(); err!=nil {
 		logger.Errorf("Validation error: %v", err.Error())
+		sendError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
